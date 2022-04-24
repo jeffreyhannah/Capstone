@@ -1,136 +1,143 @@
+{% extends 'main.html' %}
 {% load static %}
+{% load filename %}
+
+{% block stylesheet %}
+
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+
+{% endblock stylesheet%}
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<title>Dashboard</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+{% if request.user.is_staff %}
 
-	<link href="{% static 'style.css' %}" rel="stylesheet">
-	<style>
-		footer {
-		  background: #212529;
-		  position: fixed;
-		  width: 100%;
-		  bottom: 0;
-		  left: 0;
-		  height: 35%;
-		  color: white;
-		}
-	td {
-	 font-size: 18px;
-	 vertical-align: middle;
-	}
-	</style>
-</head>
+{% block adminnav%}
+<nav class="navbar navbar-expand-lg static-top nav-custom" style="background-color: #062756;">
+	<div class="container">
+	  <a class="navbar-brand" href="{% url 'index' %}">
+		<img src="{% static 'logo.png' %}" alt="..." height="38">
+	  </a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<i class="bi bi-list" style="font-size: 2rem; color: #0e7594;"></i>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		{% block nav2%}
+		<ul class="navbar-nav ms-auto">
+			  <li class="nav-item">
+				  <a class="nav-link" href="#">Hello, {{request.user}}</a>
+			  </li>
+					  <li class="nav-item">
+						  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+					  </li>
 
-<body>
+		</ul>
+		{% endblock nav2%}
+	  </div>
+	</div>
+  </nav>
+{% endblock adminnav%}
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-	  <div class="container">
-	    <a class="navbar-brand" href="{% url 'index' %}">
-	      <img src="{% static 'logo.jpg' %}" alt="..." height="38">
-	    </a>
-	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	      <span class="navbar-toggler-icon"></span>
-	    </button>
-	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+{% else %}
+
+	{% block nav%}
 	      <ul class="navbar-nav ms-auto">
 	        	<li class="nav-item">
-	        		<a class="nav-link" href="#">Hello, {{request.user}}</a>
+	        		<a class="nav-link" href="{% url 'index' %}">Home</a>
 	        	</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'logout' %}">Logout</a>
 						</li>
 
 	      </ul>
-	    </div>
-	  </div>
-	</nav>
-	<br>
+	{% endblock nav%}
+{% endif %}
 
+
+
+	{% block content%}
+{% if request.user.is_staff %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+	<div class="mx-auto">
+
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'dashboard-admin' %}""><i class="bi bi-speedometer"> Overview</i></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'admin-users' %}"><i class="bi bi-people-fill"> Users</i></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'admin-files' %}"><i class="bi bi-files"> Files</i></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link active" href="#"><i class="bi bi-speedometer2"> Users' View</i></a>
+			</li>
+    </ul>
+  </div>
+	</div>
+	</div>
+</nav>
+{% endif %}
 		<header>
-		<h1 style=text-align:center> Family Virtual Safe (Dashboard)</h1>
-	</header>
+			<h1 class="inner_text_shadow mt-3 mb-0" style="text-align:center; color:#bababa;"> {{request.user}}'s Dashboard</h1>
+		</header>
 			<br>
-			<div class="container">
-			  <h3>File Vault:</h3>
-				<a href="{% url 'upload' %}">
-					<button type="button" class="btn btn-primary btn-sm">Upload</button>
-				</a>
-				<br>
-				<hr>
-			  <table class="table table-striped">
-			  <thead>
-			    <tr>
-			      <th scope="col">File Name:</th>
-			      <th scope="col">Size:</th>
-			      <th scope="col">Date Created:</th>
-			      <th scope="col">Actions:</th>
-			    </tr>
-			  </thead>
-			  <tbody>
 
-			  {% for i in object_list %}
-			  	<tr>
-			  		<td>{{i.file_field.name|cut:'content/'}}</td>
-			  		<td class="size">{{i.file_field.size|filesizeformat}}</td>
-			  		<td>{{i.date_created}}</td>
-			  		<td>
-			  			<a class="btn btn-success btn-sm"href="{{ i.file_field.url }}" target="_blank" ><i class="bi bi-eye"></i></a>
-			  			<a class="btn btn-primary btn-sm"href="{{ i.file_field.url }}" download><i class="bi bi-download"></i></a>
-			  				<a class="btn btn-danger btn-sm"href="{% url 'delete' i.id%}"><i class="bi bi-trash3"></i></a>
-			  		</td>
-			  	</tr>
-			  {% endfor %}
+				<div class="card-custom m-5 pb-3">
+					<div class="row m-2">
+							<dl class="row my-3">
+								<dt class="col-sm-3">File Vault:</dt>
+								<dd class="col-sm-9 text-end"><a href="{% url 'upload' %}" class="btn btn-primary">Upload File</a></dd>
+							</dl>
+					</div>
 
-			  </tbody>
-			 </table>
-			 {% if request.user.is_superuser%}
-			 <p>You are superuser!</p>
-			 {% else %}
-			 <p>You are Regular user.</p>
-			 {% endif %}
-			</div>
+					<div class="card-body">
+						<table id="datatable" class="table table-custom table-striped table-hover">
+							<thead>
+							  <tr>
+								<th scope="col">File Name:</th>
+								<th scope="col">Size:</th>
+								<th scope="col">Date Created:</th>
+								<th scope="col">Actions:</th>
+							  </tr>
+							</thead>
+							<tbody>
 
-			<footer class="w-100 py-4 flex-shrink-0" id="">
-		 		<div class="container">
-		 		  <div class="row">
-		 		    <div class="col order-first">
-		 		      <h5 class="h1 text-white">FB.</h5>
-		                     <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-		                     <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary" href="#">Bootstrapious.com</a></p>
-		 		    </div>
-		 		    <div class="col">
-		 		      <h5 class="text-white mb-3">Quick links</h5>
-		                     <ul class="list-unstyled text-muted">
-		                         <li><a href="#">Home</a></li>
-		                         <li><a href="#">About</a></li>
-		                         <li><a href="#">Get started</a></li>
-		                         <li><a href="#">FAQ</a></li>
-		                     </ul>
-		 		    </div>
-		 		    <div class="col order-last">
-		 		      <h5 class="text-white mb-3">Website Policy</h5>
-		                     <ul class="list-unstyled text-muted">
-		                         <li><a href="#">Terms and Conditions</a></li>
-		                     </ul>
-		 		    </div>
-		 		  </div>
-		 		</div>
-		  </footer>
+							{% for i in object_list %}
+								<tr>
+									<td>{{i.file_field|filename}}</td>
+									<td class="size">{{i.file_field.size|filesizeformat}}</td>
+									<td>{{i.date_created}}</td>
+									<td>
+										<a class="btn btn-success btn-sm"href="{{ i.file_field.url }}" target="_blank" ><i class="bi bi-eye"></i></a>
+										<a class="btn btn-primary btn-sm"href="{{ i.file_field.url }}" download><i class="bi bi-download"></i></a>
+										<a class="btn btn-danger btn-sm"href="{% url 'delete' i.id%}"><i class="bi bi-trash3"></i></a>
+									</td>
+								</tr>
+							{% endfor %}
 
+							</tbody>
+						   </table>
+						</div>
 
+				</div>
 
+	{% endblock content%}
 
-</body>
+	{% block footer %}
 
+	<footer class="p-2 text-white text-center fixed-bottom" style="background-color: black;">
+	{% endblock footer %}
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</html>
+{% block scripts %}
+<script src="{% static 'script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+{% endblock scripts %}

@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Documentation{%endblock title%}
+
+{% block nav%}
+      <ul class="navbar-nav ms-auto">
+        {% if request.user.is_authenticated %}
+        	<li class="nav-item">
+        		<a class="nav-link" href="#">Hello, {{request.user}}</a>
+        	</li>
+        	<li class="nav-item">
+        		<a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+        	</li>
+        {% else %}
+        <li class="nav-item">
+         <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+        {% endif %}
+      </ul>
+{% endblock nav%}
+
+{% block content%}
+	<header style="background-color:black; color: white;">
+		<h1 style="text-align:center;color:#0e7594;" class="mt-4 mb-4"> Documentation </h1>
+	</header>
+
+<div class="container text-center">
+  <h1>Coming Soon!</h1>
+  <img src="https://www.seekpng.com/png/full/454-4543385_coming-soon-i-m-on-break-sign.png"  class="img-fluid" alt="coming soon" style="margin-top:50px; width:30%; ">
+</div>
+
+
+
+
+
+{% endblock content %}
+
+{% block footer %}
+<footer class="p-2 text-white text-center fixed-bottom" style="background-color:black">
+{% endblock footer %}

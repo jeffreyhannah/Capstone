@@ -1,16 +1,72 @@
 body{
-	background-color: #dbdbd9;
-	min-height: 400px;
-	margin-bottom: 100px;
-	clear: both;
+	background-color: #d1d1d1;
 	display: flex;
 	flex-direction: column;
+	padding: 0px;
+	margin: 0;
 }
 
-table {
-	color: blue;
+.nav-custom {
+	background-color: black;
 }
 
+nav .navbar-nav li a{
+  color: white;
+	font-size: 18px;
+	list-style: none;
+  }
+
+li a:hover , nav .navbar-nav li a:hover, body a:hover{
+	color: #0e7594 ;
+}
+
+
+
+.container{
+	padding:10px;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-size: 18px;
+	min-height: 100%;
+}
+
+
+
+.table-custom {
+	table-layout: fixed;
+}
+
+	.table-custom td{
+		word-wrap:break-word
+	}
+
+	.table-custom title{
+		padding-bottom: 15px;
+		background: #435d7d;
+		color: #fff;
+		padding: 16px 30px;
+		min-width: 100%;
+		margin: -20px -25px 10px;
+		border-radius: 3px 3px 0 0;
+	}
+
+
+.table-custom th a{
+	text-decoration: none;
+}
+
+.inner_text_shadow
+{
+    text-shadow: #e0e0e0 1px 1px 0;
+}
+
+
+
+
+.table-title h2 {
+	margin: 5px 0 0;
+	font-size: 24px;
+}
 
 body .a{
   color:white;
@@ -21,11 +77,40 @@ body .a{
 	font-size: 20px;
 }
 
-.wf {
-		outline: 1px solid black;
-	}
-
 
 .icon-white {
   color: white;
+}
+
+@media (max-width: 680px) {
+.table {
+    max-width: inherit;
+  }
+}
+
+.gradient-custom {
+	/* fallback for old browsers */
+	background: #dbdbd9;
+
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: -webkit-linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1))
+  }
+
+  .card-registration .select-input.form-control[readonly]:not([disabled]) {
+	font-size: 1rem;
+	line-height: 2.15;
+	padding-left: .75em;
+	padding-right: .75em;
+  }
+  .card-registration .select-arrow {
+	top: 13px;
+  }
+
+
+.card-custom {
+	background-color: #dbdbd9;
+	border-radius: 20px;
 }

@@ -1,0 +1,126 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load filename %}
+
+{% block title %}Admin Dashboard {%endblock title%}
+
+{% block stylesheet %}
+
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'admin-style.css' %}">
+
+{% endblock stylesheet%}
+
+{% block adminnav%}
+<nav class="navbar navbar-expand-lg static-top nav-custom" style="background-color: #062756;">
+	<div class="container">
+	  <a class="navbar-brand" href="{% url 'index' %}">
+		<img src="{% static 'logo.png' %}" alt="..." height="38">
+	  </a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<i class="bi bi-list" style="font-size: 2rem; color: #0e7594;"></i>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		{% block nav%}
+		<ul class="navbar-nav ms-auto">
+			  <li class="nav-item">
+				  <a class="nav-link" href="#">Hello, {{request.user}}</a>
+			  </li>
+					  <li class="nav-item">
+						  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+					  </li>
+
+		</ul>
+		{% endblock nav%}
+	  </div>
+	</div>
+  </nav>
+{% endblock adminnav%}
+
+
+
+{% block content%}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+	<div class="mx-auto">
+
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'dashboard-admin' %}""><i class="bi bi-speedometer"> Overview</i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#"><i class="bi bi-people-fill"> Users</i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin-files' %}"><i class="bi bi-files"> Files</i></a>
+      </li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'reg-dash' %}"><i class="bi bi-speedometer2"> Users' View</i></a>
+			</li>
+    </ul>
+  </div>
+	</div>
+	</div>
+</nav>
+
+
+
+
+<header class="p-3">
+<h2 style=text-align:center> (Admin Dashboard)</h2>
+</header>
+
+
+<!--USERS TABLE-->
+<div class="container">
+	<div class="card-custom mb-5">
+		<div class="row m-2">
+				<dl class="row my-3">
+					<dt class="col-sm-3">Users:</dt>
+				</dl>
+				<table id="datatable" class="table table-custom table-striped table-hover">
+				<thead>
+					<tr>
+						<th scope="col">User Name:</th>
+						<th scope="col">Email:</th>
+						<th scope="col">Last Login:</th>
+						<th scope="col">Date Joined:</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				{% for i in user_list %}
+					<tr>
+						<td>{{i.username}}</td>
+						<td>{{i.email}}</td>
+						<td>{{i.last_login}}</td>
+						<td>{{i.date_joined}}</td>
+					</tr>
+				{% endfor %}
+
+				</tbody>
+			 </table>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock content%}
+
+
+{% block footer %}
+
+<footer class="p-2 text-white text-center relative-bottom" style="background-color: black;">
+{% endblock footer %}
+
+
+{% block scripts %}
+<script src="{% static 'script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+{% endblock scripts %}

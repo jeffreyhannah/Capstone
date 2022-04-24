@@ -1,39 +1,9 @@
+{% extends 'main.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<title>Home</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+{% block title %}Home{%endblock title%}
 
-	<link href="{% static 'style.css' %}" rel="stylesheet">
-	<style>
-		footer {
-		  background: #212529;
-		  position: fixed;
-		  width: 100%;
-		  bottom: 0;
-		  left: 0;
-		  height: 35%;
-		  color: white;
-		}
-	</style>
-</head>
-
-<body>
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'index' %}">
-      <img src="{% static 'logo.jpg' %}" alt="..." height="38">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+{% block nav%}
       <ul class="navbar-nav ms-auto">
         {% if request.user.is_authenticated %}
         	<li class="nav-item">
@@ -51,61 +21,184 @@
         </li>
         {% endif %}
       </ul>
-    </div>
-  </div>
-</nav>
-<br><br>
-	<header>
-		<h1 style="text-align:center"> Family Virtual Safe </h1>
-	</header>
-	<br><br>
+{% endblock nav%}
 
-			<div class="container">
-			  <div class="row">
-				<div class="col wf">
-				  <h3 style="text-align:center">Welcome</h3><hr>
-				  <p style="text-align:center">Welcome to www.IFT-Capstone.com<br>Please Register an account or login to procced.<br>
-				  	<img src="{% static 'logo.jpg' %}" alt="..." height="50">
-					</p><br>
+{% block content%}
+	<header style="background-color:black; color: white;">
+		<h1 style="text-align:center;color:#0e7594;" class="mt-4 mb-4"> Family Virtual Safe </h1>
+	</header>
+
+<!-- Clutter Less -->
+<section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+	<div class="container">
+		<div class="d-sm-flex align-center justify-content-between">
+			<div>
+				<h2>Storing files made simple.</h2>
+				<p class="lead"><strong>Clutter Less </strong>on your file cabinet!</p>
+				<a href="{% url 'register' %}">
+				<button class="btn btn-lg" style="background-color:#0e7594;color:white;">Sign Up!</button>
+				</a>
+			</div>
+			<img src="{% static 'showcase.svg' %}" alt="" class="img-fluid w-50 d-none d-sm-block">
+		</div>
+	</div>
+</section>
+
+<!-- Documentation -->
+<section class="text-light p-5 text-center" style="background-color:#0e7594;">
+	<div class="container">
+			<div class="d-md-flex justify-content-between align-items-center">
+				<h3 class="mb-3 mb-md-0">See how it all works!</h3>
+        <a href="{% url 'doc' %}">
+				<button class="btn btn-dark btn-lg"><i class="bi bi-file-earmark-text"> Documentation</i></button>
+        </a>
+			</div>
+	</div>
+</section>
+
+<!-- Primary Features -->
+<section class="p-3">
+	<div class="container">
+		<h2 class="font-weight-bold">Your primary features:</h2>
+		<div class="row text-center">
+			<div class="col-md my-3">
+				<div class="card bg-success text-light">
+					<div class="card-body text-center">
+						<div class="h1 mb-3">
+							<i class="bi bi-arrow-up-circle"></i>
+						</div>
+						<h3 class="card-title mb-3">
+							Upload
+						</h3>
+						<p class="card-text">
+							You can upload many files as you want without a limit. Click upload button on your dashboard page to get started.
+						</p>
+
+					</div>
 				</div>
 			</div>
+			<div class="col-md my-3">
+				<div class="card text-light">
+					<div class="card-body text-center" style="background-color:#0e7594;">
+						<div class="h1 mb-3">
+							<i class="bi bi-arrow-down-circle"></i>
+						</div>
+						<h3 class="card-title mb-3">
+							Download
+						</h3>
+						<p class="card-text">
+							Downloading your file made never been easier before. Find the file on the table, and click download icon to save what you need.
+						</p>
+
+					</div>
+				</div>
 			</div>
+			<div class="col-md my-3">
+				<div class="card bg-dark text-light">
+					<div class="card-body text-center">
+						<div class="h1 mb-3">
+							<i class="bi bi-search"></i>
+						</div>
+						<h3 class="card-title mb-3">
+						   Search
+						</h3>
+						<p class="card-text">
+              Can't find your files? No worries! Use the search bar that is built-in to the dashboard table to quickly find the file that you are looking for.
+						</p>
 
-
-
-
-
-</body>
-
- <footer class="w-100 py-4" id="override">
-		<div class="container">
-		  <div class="row">
-		    <div class="col order-first">
-		      <h5 class="h1 text-white">FamilySafe</h5>
-                    <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-                    <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary" href="#">Bootstrapious.com</a></p>
-		    </div>
-		    <div class="col">
-		      <h5 class="text-white mb-3">Quick links</h5>
-                    <ul class="list-unstyled text-muted">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Get started</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-		    </div>
-		    <div class="col order-last">
-		      <h5 class="text-white mb-3">Website Policy</h5>
-                    <ul class="list-unstyled text-muted">
-                        <li><a href="#">Terms and Conditions</a></li>
-                    </ul>
-		    </div>
-		  </div>
+					</div>
+				</div>
+			</div>
 		</div>
-</footer>
+	</div>
+</section>
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</html>
+<!-- Top Features -->
+<section id="topfeature" class="p-2" style="background-color: #fcecd9;">
+	<div class="container">
+		<div class="container text-center">
+			<h2 class="text-bold">Top Features</h2>
+			<p class="lead">Here are a few of many features included in family safe app.</p>
+		</div>
+
+		<div class="row text-left">
+			<div class="col-md my-3">
+				<div class="d-sm-flex align-center justify-content-between text-dark">
+					<div class="">
+						<div class="h1 mb-3">
+							<i class="bi bi-check-circle-fill" style="color:green;"></i>
+						</div>
+						<h3 class="card-title mb-3">
+							Simplified UI Design
+						</h3>
+						<p class="card-text">
+              We use bootstrap front-end framework to customize this webpage. With a lot of customization, we have simplified the user interface (UI) to help any one able to understand the functionalities.
+						</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md my-3">
+				<div class="d-sm-flex align-center justify-content-between text-dark">
+					<div class="">
+						<div class="h1 mb-3">
+							<i class="bi bi-box2-fill" style="color:#726705;"></i>
+						</div>
+						<h3 class="card-title mb-3">
+							Store any data types
+						</h3>
+						<p class="card-text">
+						 This web application is designed to take any types of data. You can store any data type in the server as you wish. Per customer request, we are able to customize the data-type that the application accept.
+						</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md my-3">
+				<div class="d-sm-flex align-center justify-content-between text-dark">
+					<div class="">
+						<div class="h1 mb-3" style="color:#048630;">
+							<i class="bi bi-shield-fill-check"></i>
+						</div>
+						<h3 class="card-title mb-3">
+							Full control over your files
+						</h3>
+						<p class="card-text">
+              Worry less on who store all of your files! You have full control over your data. Forget about the cloud.
+						</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md my-3">
+				<div class="d-sm-flex align-center justify-content-between text-dark">
+					<div class="">
+						<div class="h1 mb-3" style="color:#0975a0;">
+							<i class="bi bi-phone-fill"></i>
+						</div>
+						<h3 class="card-title mb-3">
+							Access via smart devices
+						</h3>
+						<p class="card-text">
+              This application is designed to be fluid and responsive on all of your smart devices. You can manage your files via your smart phones and smart devices. We do recommend to use a computer to take full advantage of beautiful UI.
+						</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+      <p>Read our Terms and conditions <a href="{% url 'terms' %}">here.</a></p>
+	</div>
+
+
+</section>
+
+
+
+
+
+{% endblock content %}
+
+{% block footer %}
+<footer class="p-2 text-white text-center relative-bottom" style="background-color:black">
+{% endblock footer %}
